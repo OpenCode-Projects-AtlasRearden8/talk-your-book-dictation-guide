@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenAI-Compatible &amp; Local Transcription Endpoints — Talk Your Book</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header>
+  <a class="brand" href="../index.html">Talk Your Book</a>
+  <span class="tagline">A voice dictation manual for authors · Asdale Dynamics, LLC</span>
+</header>
+<div class="wrap">
+<nav>
+<h2>Contents</h2>
+<a href='../index.html'>Docs Index</a>
+<a href='../pages/01-introduction.html'>Introduction</a>
+<a href='../pages/02-free-dictation.html'>Free Dictation on Every Device</a>
+<a href='../pages/03-transcription-endpoints.html' class="active">OpenAI-Compatible &amp; Local Transcription Endpoints</a>
+<a href='../pages/04-punctuation-control.html'>Punctuation Control Tricks</a>
+<a href='../pages/05-sculpting-drafts.html'>Sculpting Spoken Drafts into Readable Prose</a>
+<a href='../pages/06-privacy.html'>Protecting Manuscript Privacy</a>
+<a href='../pages/07-word-flow-trial.html'>The 30-Day Word-Flow Trial Plan</a>
+</nav>
+<main id="top">
+<p>This chapter is optional but powerful: instead of live device dictation, you record voice memos, then a <strong>local transcription server</strong> on your own machine converts them to text. Two big wins for authors:</p>
+<ul>
+<li><strong>Privacy by architecture.</strong> Your voice audio never leaves your computer.</li>
+<li><strong>Freedom of form.</strong> Talk while driving, washing dishes, at the gym. The transcript waits for you.</li>
+</ul>
+<p>This is the Ollama-friendly: no API keys anywhere approach.</p>
+<h2 id='21-what-openai-compatible-means-in-one-paragraph'>2.1 What "OpenAI-compatible" means (in one paragraph)</h2>
+<p>Many tools expose a <strong>/v1/audio/transcriptions</strong> endpoint that speaks the same request/response format as OpenAI's hosted transcription endpoint. The benefit: one client tool can switch between a cloud provider and your homelab simply by changing two settings — the <strong>base URL</strong> and nothing else. You get cloud-quality ergonomics with local-first freedom, and you never need to create an account just to try something.</p>
+<h2 id='22-what-ollama-does-here-and-what-it-doesnt'>2.2 What Ollama does here — and what it doesn't</h2>
+<p>An honest map, because this confuses everyone:</p>
+<ul>
+<li><strong>Ollama</strong> is a beloved local app for running chat models (Llama, Mistral, Qwen, etc.). If you edit drafts with a local model, Ollama pairs perfectly with this workflow — and we'll use it in Chapter 4.</li>
+<li><strong>As of writing, Ollama does not host audio transcription.</strong> Its endpoint set does not include /v1/audio/transcriptions, and uploading voice audio to a local chat model the ordinary way is not the intended path.</li>
+<li>The practical pattern used in this guide is therefore: <strong>a dedicated transcription server for audio + Ollama for prose cleanup.</strong> Both stay local; both are keyless; they chain like scissors before a broom.</li>
+</ul>
+<h2 id='23-two-free-keyless-transcription-servers'>2.3 Two free keyless transcription servers</h2>
+<p>Pick whichever fits your comfort level. Both work fully offline after setup.</p>
+<h3 id='option-a-whispercpp-native-server-lightest-footprint'>Option A: whisper.cpp native server (lightest footprint)</h3>
+<p>Runs the battle-tested Whisper models in C++ on CPU or GPU. No Python environment required.</p>
+<p>1. <strong>Download a whisper.cpp model</strong>, e.g. <code>ggml-base.bin</code> or <code>ggml-small.bin</code> (base is quicker; small trades speed for accuracy). 2. <strong>Dump the source.</strong> Finger-typing build instructions moves faster than one paragraph can: clone the whisper.cpp repository and follow its README's build steps (<code>cmake -B build &amp;&amp; cmake --build build</code> on most machines). 3. <strong>Start the server:</strong> run its bundled HTTP server (called with a <code>--server</code> switch and pointing at your model file). It now listens on localhost for transcription requests in the OpenAI-compatible shape. 4. <strong>Point a client at it</strong> (Chapter 2.4). Base URL: <code>http://localhost:PORT/v1</code>.</p>
+<p>Good when: you want minimal moving parts, offline after setup, and don't mind typing one terminal command.</p>
+<h3 id='option-b-a-python-local-server-friendliest-ui'>Option B: a Python local server (friendliest UI)</h3>
+<p>Several open-source projects package Whisper with an OpenAI-compatible HTTP layer, frequently named "Speaches", "faster-whisper-server", or similar. They expose <strong>/v1/audio/transcriptions</strong> directly and are started with one or two commands. You install them with Python's usual tooling; then the endpoint promotes your phone-recorded audio into prose with zero API registration.</p>
+<p>Good when: you want the exact OpenAI-compatible shape (so any generic client works), and you're comfortable with <code>python -m</code> style commands or a small UI.</p>
+<p>Either option works. Speed, memory size, and language options vary slightly; the <em>workflow identical</em>.</p>
+<h2 id='24-pointing-a-client-tool-at-your-local-endpoint'>2.4 Pointing a client tool at your local endpoint</h2>
+<p>The OpenAI-compatible promise means any "talk to a transcription endpoint" tool works by setting:</p>
+<ul>
+<li><strong>Base URL:</strong> <code>http://localhost:8080/v1</code> (or the port your server printed)</li>
+<li><strong>API key:</strong> anything it requires to satisfy the client — most keyless local servers accept any non-empty string because nothing is actually keyed. Never store a real secret for a local server.</li>
+</ul>
+<p>Two author-friendly client styles:</p>
+<p>1. <strong>Clipboard-first:</strong> a menubar/indicator app that listens for a hotkey, records, transcribes to your local server, and pastes text into whatever's focused — then Chapter 3's punctuation tricks polish it. 2. <strong>File-first:</strong> you record .m4a or .wav files on your phone, transfer them (USB, cloud folder, or the same Wi-Fi share tools), then send each file to <code>POST /v1/audio/transcriptions</code> with the file in the request body and the model name in the normal parameter. The server returns plain text you paste into your draft folder.</p>
+<p>File-first is the most forgiving workflow for long-form book work, because it decouples <em>talking</em> from <em>typing</em>, which lets you record on days you're at the gym but write on days you're at the desk.</p>
+<h2 id='25-word-cost-memory-cost-and-model-choice'>2.5 Word-cost, memory cost, and model choice</h2>
+<table><tr><th>Whisper size</th><th>Rough RAM needed</th><th>Best for</th></tr><tr><td>tiny / base</td><td>~1 GB</td><td>Fast drafts, long brain dumps, older laptops</td></tr><tr><td>small</td><td>~2 GB</td><td>The sweet spot for most book work</td></tr><tr><td>medium</td><td>~5 GB</td><td>Noisy environments (Cafe, gym audio)</td></tr><tr><td>large (fleet variants)</td><td>10 GB+</td><td>Accuracy maximalists; often overkill</td></tr></table>
+<p>Start with <strong>base</strong> or <strong>small</strong>. Don't optimize transcription on day one; upgrade only if you keep hearing the model mishear you on words that matter (medical terms, FFXIV raid names, chess jargon).</p>
+<h2 id='26-the-ollama-friendly-pipeline-end-to-end'>2.6 The Ollama-friendly pipeline, end to end</h2>
+<p>Here's the local chain in one glance:</p>
+<pre><code>
+Phone / recorder → audio file
+      ↓
+Local transcription server (whisper.cpp or Python Whisper server)
+      ↓  raw spoken text deposited in your draft folder
+Ollama (local chat model)  → the sculpting pass, Chapter 4
+      ↓
+Readable prose → your manuscript
+</code></pre>
+<p>No API keys are generated, stored, or rotated anywhere in this chain. If your network sits at home and both servers run on one machine, not a single byte of audio or manuscript ever touches the public internet.</p>
+<p>Chapter 4 picks up exactly where the transcript lands and polishes into prose — but first, Chapter 3: making the <em>raw</em> dictation cleaner, because punctuation hygiene in your voice saves real editing time later.</p>
+<h2 id='27-troubleshooting-quick-hits'>2.7 Troubleshooting quick-hits</h2>
+<ul>
+<li><strong>Server "connection refused"?</strong> Check the port and that the process is still running. Beginners almost always have a port typo or a server that exited from a missing model file.</li>
+<li><strong>Audio "unsupported format"?</strong> Convert with a free tool to WAV or use the server's documented accepted formats; some prefer 16 kHz mono WAV. Your server's own docs will list accepted inputs on their project page.</li>
+<li><strong>Garbled long files?</strong> Many local servers cap audio length per request. Split a long recording at a natural body paragraph with the free audio tool of your choice — splits at silence boundaries are usually automatic.</li>
+<li><strong>USB versus Bluetooth microphone:</strong> Bluetooth compression shows up in accuracy. In a pinch, the free path around it is a wired or on-device mic.</li>
+</ul>
+<p class="prevnext">&larr; <a href='../pages/02-free-dictation.html'>Free Dictation on Every Device</a> &nbsp;·&nbsp; <a href='../pages/04-punctuation-control.html'>Punctuation Control Tricks</a> &rarr;</p>
+<footer>MIT License · Copyright (c) 2026 Asdale Dynamics, LLC · This site is generated offline from docs by <code>site/gen.py</code>. No tracking, no keys, no cloud.</footer>
+</main>
+</div>
+</body>
+</html>

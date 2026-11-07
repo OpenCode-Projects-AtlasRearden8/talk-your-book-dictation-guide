@@ -1,0 +1,28 @@
+
+:root { --bg:#f7f4ed; --ink:#25211a; --muted:#6d655a; --accent:#2f6f4f; --card:#fffdf8; --line:#ddd6c5; }
+* { box-sizing:border-box; }
+body { margin:0; font:17px/1.65 Georgia, 'Times New Roman', serif; background:var(--bg); color:var(--ink); }
+header { padding:1.1rem 2rem; border-bottom:3px solid var(--accent); background:var(--card); display:flex; flex-wrap:wrap; gap:.3rem 1.2rem; align-items:baseline; }
+.brand { font-weight:700; font-size:1.35rem; color:var(--ink); text-decoration:none; }
+.tagline { color:var(--muted); font-size:.85rem; }
+.wrap { display:grid; grid-template-columns:17rem minmax(0,1fr); gap:2.5rem; max-width:75rem; margin:0 auto; padding:2rem 2rem 4rem; }
+nav { position:sticky; top:1.5rem; align-self:start; font-size:.95rem; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1rem .4rem; }
+nav h2 { font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:.2rem .8rem .5rem; }
+nav a { display:block; padding:.35rem .8rem; color:var(--ink); text-decoration:none; border-left:3px solid transparent; }
+nav a:hover { color:var(--accent); }
+nav a.active { border-left-color:var(--accent); font-weight:700; }
+main { max-width:46rem; }
+h1,h2,h3 { line-height:1.25; }
+h1 { font-size:1.9rem; margin-top:0; }
+em { font-style:italic; }
+code { background:#ece8dc; padding:.08rem .35rem; border-radius:4px; font-size:.88em; font-family:ui-monospace, Consolas, monospace; }
+pre { background:#2c2a23; color:#f2efe5; padding:1rem 1.2rem; border-radius:8px; overflow:auto; }
+pre code { background:none; color:inherit; padding:0; }
+blockquote { margin:1.1rem 0; padding:.5rem 1.2rem; border-left:4px solid var(--accent); background:var(--card); font-style:italic; }
+table { border-collapse:collapse; width:100%; margin:1.1rem 0; font-size:.93rem; background:var(--card); }
+th, td { border:1px solid var(--line); padding:.45rem .7rem; text-align:left; vertical-align:top; }
+th { background:#ece8dc; }
+li { margin:.3rem 0; }
+.prevnext { margin-top:2.5rem; padding-top:1rem; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+footer { margin-top:2.5rem; font-size:.8rem; color:var(--muted); border-top:1px solid var(--line); padding-top:1rem; }
+@media (max-width:720px) { .wrap { grid-template-columns:1fr; padding:1.2rem 1rem 3rem; } nav { position:static; } }

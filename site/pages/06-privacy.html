@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protecting Manuscript Privacy — Talk Your Book</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header>
+  <a class="brand" href="../index.html">Talk Your Book</a>
+  <span class="tagline">A voice dictation manual for authors · Asdale Dynamics, LLC</span>
+</header>
+<div class="wrap">
+<nav>
+<h2>Contents</h2>
+<a href='../index.html'>Docs Index</a>
+<a href='../pages/01-introduction.html'>Introduction</a>
+<a href='../pages/02-free-dictation.html'>Free Dictation on Every Device</a>
+<a href='../pages/03-transcription-endpoints.html'>OpenAI-Compatible &amp; Local Transcription Endpoints</a>
+<a href='../pages/04-punctuation-control.html'>Punctuation Control Tricks</a>
+<a href='../pages/05-sculpting-drafts.html'>Sculpting Spoken Drafts into Readable Prose</a>
+<a href='../pages/06-privacy.html' class="active">Protecting Manuscript Privacy</a>
+<a href='../pages/07-word-flow-trial.html'>The 30-Day Word-Flow Trial Plan</a>
+</nav>
+<main id="top">
+<p>Your unpublished manuscript is an asset, and your voice recordings contain your thinking in unfiltered form. This chapter is about keeping both yours. It's written in the spirit Dylan uses everywhere: <strong>local-first by default, cloud only when you knowingly choose it.</strong></p>
+<h2 id='51-the-privacy-ladder'>5.1 The privacy ladder</h2>
+<p>Every dictation setup in this manual falls somewhere on one ladder, from most to least private:</p>
+<p>1. <strong>Fully local, fully offline.</strong> Ollama chat models + whisper.cpp or a local Whisper server, on an airplane, with no internet. Even a packet sniffer would find nothing. This is the ceiling. 2. <strong>Local hardware, cloud setup tools.</strong> You downloaded Ollama from the internet and pulled a model — but after setup, nothing leaves. Practically the same as level 1 for manuscript content. 3. <strong>On-device cloud-assisted dictation.</strong> Windows Voice Typing, macOS dictation with network setting, phone keyboards: audio or snippets are processed by the platform vendor's cloud service while the tool works, with no audio <em>file</em> ever uploaded by you, and pages of an in-progress article are partially in flight. 4. <strong>Explicitly cloud AI editors and transcription services.</strong> Text you paste (or audio you upload) is processed by that company's servers under their privacy policy. Contents invisible to you after that unless the vendor documents otherwise.</p>
+<p>Aim for the highest rung your workflow allows — level 1–2 for drafts, levels 3–4 only when you knowingly accept the trade, ideally with drafts already scrubbed of anything sensitive (5.4).</p>
+<h2 id='52-train-yourself-to-say-cloud-marketing-silence-out-loud'>5.2 Train yourself to say "cloud marketing silence" out loud</h2>
+<p>When a tool's documentation doesn't answer <em>right away</em> whether your pasted text or uploaded audio is used for model training, treat the silence as a "yes according to their default terms until they update them." Authors of unpublished books should be defensive here for two solid reasons:</p>
+<ul>
+<li>A manuscript copied to a third-party service is a manuscript you've shared, legally, once — before you even knew what you gave away.</li>
+<li>The most common content leak is not a hacker; it's an author pasting early chapters into a tool whose <em>default</em> settings changed between versions.</li>
+</ul>
+<p>None of this is paranoia. It is informed consent, applied to your words.</p>
+<h2 id='53-sensitivity-triage-before-the-first-word'>5.3 Sensitivity triage before the first word</h2>
+<p>Before you dictate, run a two-question triage on today's intended content:</p>
+<p>1. <strong>Does this draft contain anyone's personal data</strong> — patient details, names + conditions, addresses of people who didn't volunteer to be here — or anyone's private matters beyond "my own unedited thoughts"? If yes: <strong>stop</strong> and go to 5.4. Never dictate PHI (protected health information) onto cloud-assisted tools no matter how much faster they are. As a nurse-author, Dylan's rule you should copy: <em>if it would need HIPAA-style care to share at work, it needs privacy care on the internet.</em> 2. <strong>Could this draft damage me if it surfaced too early?</strong> Money plans, launch dates, unpublished contract terms. If yes: dictate into the local-only path or a notes app you'd be comfortable handing to a friend — not into clever little apps whose whole privacy answer is buried.</p>
+<h2 id='54-three-no-cost-privacy-upgrades-you-can-apply-today'>5.4 Three no-cost privacy upgrades you can apply today</h2>
+<p>These take minutes and cover 90% of author risk:</p>
+<ul>
+<li><strong>Protect the names from the first take.</strong> Write about people you know using pseudonyms or initials from the very first dictation. Chapter 4's find-and-replace pass then swaps them for real names (or not) in one clean motion — something late-day phone cleanup never reliably does.</li>
+<li><strong>Treat voice memos as short-lived fuel.</strong> Keep one folder for raw voice memos and one for finished transcripts. After a memo is transcribed and saved, delete it and empty the trash — once a week is plenty. Old memos stopped paying rent the day they were transcribed, but they can still embarrass you later — delete them.</li>
+<li><strong>Back up like an author, not a cloud app user.</strong> Your manuscript needs to exist in two places at all times: your working machine and one physical/encrypted destination (an external drive at minimum). "My drafts are in that one free web app" means somebody else's privacy policy is your backup plan. It works — until it doesn't.</li>
+</ul>
+<h2 id='55-what-you-dont-need-to-fear'>5.5 What you don't need to fear</h2>
+<p>For balance: everyday dictated prose about ideas, characters, opinions, and craft is fine to any level of the ladder. You do not need zero-cloud absolutism to write safely. You need:</p>
+<ul>
+<li>One consistent, mostly-private path for <em>the manuscript itself</em> (levels 1–2 recommended).</li>
+<li>A habit of triage before you dictate anything sensitive (5.3).</li>
+<li>Backup discipline (5.4).</li>
+</ul>
+<p>That's it. Privacy is a staircase, not a summit — get on the right step, and write.</p>
+<h2 id='56-if-you-choose-to-publish'>5.6 If you choose to publish…</h2>
+<p>Once the manuscript has launched, ties to privacy loosen — but two principles stay:</p>
+<ul>
+<li>Old drafts may contain names or details you changed before launch. Keep the clean final draft and one backup of the manuscript file; delete the rest of the intermediate clutter once you've confirmed what survived into the book.</li>
+<li>Beware the "just testing the AI voice-over" step at audiobook production time, which in some tools sends your entire manuscript to a third-party audio service. Read what got sent, once. That's the same reflex you're practicing now; just in a different chapter of the book.</li>
+</ul>
+<p class="prevnext">&larr; <a href='../pages/05-sculpting-drafts.html'>Sculpting Spoken Drafts into Readable Prose</a> &nbsp;·&nbsp; <a href='../pages/07-word-flow-trial.html'>The 30-Day Word-Flow Trial Plan</a> &rarr;</p>
+<footer>MIT License · Copyright (c) 2026 Asdale Dynamics, LLC · This site is generated offline from docs by <code>site/gen.py</code>. No tracking, no keys, no cloud.</footer>
+</main>
+</div>
+</body>
+</html>
